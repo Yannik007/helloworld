@@ -4,15 +4,27 @@
 
 <web-app>
   <display-name>spring</display-name>
-  <listener>
-    <listener-class>org.springframework.context.ApplicationContext</listener-class>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:resources/spring/spring-mybatis.xml</param-value>
+    </context-param>
+    <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <servlet>
     <servlet-name>springMvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:resources/spring/springmvc-context.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>springMvc</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
