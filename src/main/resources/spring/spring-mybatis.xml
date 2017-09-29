@@ -12,9 +12,9 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <mvc:annotation-driven />
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.spring.service*">
+    <context:component-scan base-package="com.spring*">
         <!-- 这里只扫描Controller，不可重复加载Service -->
-        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <!-- 引入配置文件 -->
     <bean id="propertyConfigurer"
@@ -22,29 +22,19 @@
         <property name="location" value="classpath:jdbc.properties" />
     </bean>
 
-    <bean id="dataSource" class="com.mchange.v2.c3p0.DriverManagerDataSource"
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}" />
+        <property name="driverClass" value="${jdbc.driver}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
-        <!-- 初始化连接大小 -->
-        <property name="initialSize" value="${jdbc.initialSize}"></property>
-        <!-- 连接池最大数量 -->
-        <property name="maxActive" value="${jdbc.maxActive}"></property>
-        <!-- 连接池最大空闲 -->
-        <property name="maxIdle" value="${jdbc.maxIdle}"></property>
-        <!-- 连接池最小空闲 -->
-        <property name="minIdle" value="${jdbc.minIdle}"></property>
-        <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="${jdbc.maxWait}"></property>
     </bean>
 
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 自动扫描mapping.xml文件 -->
-        <property name="mapperLocations" value="classpath:resources/mapping/*.xml"></property>
+       <!-- <property name="mapperLocations" value="classpath:mapping/*.xml"></property>-->
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
