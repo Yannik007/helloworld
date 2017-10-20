@@ -104,6 +104,12 @@
       <artifactId>spring-jdbc</artifactId>
       <version>4.2.5.RELEASE</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.40</version>
+    </dependency>
     <!--j2ee相关包 servlet、jsp、jstl-->
     <dependency>
       <groupId>javax.servlet</groupId>

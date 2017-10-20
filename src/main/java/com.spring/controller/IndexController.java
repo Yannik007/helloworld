@@ -2,6 +2,8 @@ package com.spring.controller;
 
 import com.spring.entity.User;
 import com.spring.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/index")
 public class IndexController {
+
+    protected static final Logger logger= LoggerFactory.getLogger(IndexController.class);
     @Autowired
     UserService userService;
     @RequestMapping("/hello")
@@ -26,9 +30,10 @@ public class IndexController {
     public List<User> getUser(){
         List<User> list = null;
         try {
+
             list = userService.getUser();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return  list;
     }
