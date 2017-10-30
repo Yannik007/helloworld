@@ -4,6 +4,7 @@ import com.spring.elasticSearch.ElasticSearchClient;
 import com.spring.entity.User;
 import com.spring.service.UserService;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.cluster.node.DiscoveryNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,13 @@ public class IndexController {
         return  list;
     }
     @RequestMapping("/getClient")
+    @ResponseBody
     public  String getClient(){
         TransportClient client = elasticSearchClient.getClient();
-        client.prepareGet();
-        return "hello";
+        List<DiscoveryNode> nodes = client.connectedNodes();
+        for (DiscoveryNode node : nodes) {
+            System.out.println(node.getHostAddress()+node.getAddress());
+        }
+        return "hello es";
     }
 }

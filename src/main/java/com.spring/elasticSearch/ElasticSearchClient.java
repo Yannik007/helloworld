@@ -3,6 +3,7 @@ package com.spring.elasticSearch;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,15 @@ public class ElasticSearchClient{
         Settings settings = Settings.builder().put("cluster.name","tyw").build();
         TransportClient client = new PreBuiltTransportClient(settings);
         try {
-            InetSocketTransportAddress node = new InetSocketTransportAddress(
+            InetSocketTransportAddress master = new InetSocketTransportAddress(
                     InetAddress.getByName("127.0.0.1"), 9300);
-            client.addTransportAddress(node);
+            InetSocketTransportAddress slave1 = new InetSocketTransportAddress(
+                    InetAddress.getByName("127.0.0.1"), 8100);
+            InetSocketTransportAddress slave2 = new InetSocketTransportAddress(
+                    InetAddress.getByName("127.0.0.1"), 8200);
+            client.addTransportAddress(master);
+            client.addTransportAddress(slave1);
+            client.addTransportAddress(slave2);
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
