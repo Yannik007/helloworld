@@ -1,7 +1,9 @@
 package com.spring.controller;
 
+import com.spring.elasticSearch.ElasticSearchClient;
 import com.spring.entity.User;
 import com.spring.service.UserService;
+import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,11 @@ import java.util.List;
 @RequestMapping("/index")
 public class IndexController {
 
-    protected static final Logger logger= LoggerFactory.getLogger(IndexController.class);
+    private static final Logger logger= LoggerFactory.getLogger(IndexController.class);
     @Autowired
-    UserService userService;
+    private UserService userService;
+    @Autowired
+    private ElasticSearchClient elasticSearchClient;
     @RequestMapping("/hello")
     public ModelAndView hello(){
         ModelAndView mav = new ModelAndView();
@@ -36,5 +40,11 @@ public class IndexController {
             logger.error(e.getMessage(), e);
         }
         return  list;
+    }
+    @RequestMapping("/getClient")
+    public  String getClient(){
+        TransportClient client = elasticSearchClient.getClient();
+        client.prepareGet();
+        return "hello";
     }
 }
