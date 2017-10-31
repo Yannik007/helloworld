@@ -22,9 +22,9 @@ public class ElasticSearchClient{
             InetSocketTransportAddress master = new InetSocketTransportAddress(
                     InetAddress.getByName("127.0.0.1"), 9300);
             InetSocketTransportAddress slave1 = new InetSocketTransportAddress(
-                    InetAddress.getByName("127.0.0.1"), 8100);
+                    InetAddress.getByName("127.0.0.1"), 9301);
             InetSocketTransportAddress slave2 = new InetSocketTransportAddress(
-                    InetAddress.getByName("127.0.0.1"), 8200);
+                    InetAddress.getByName("127.0.0.1"), 9302);
             client.addTransportAddress(master);
             client.addTransportAddress(slave1);
             client.addTransportAddress(slave2);
