@@ -3,9 +3,8 @@ package com.spring.elasticSearch;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -13,7 +12,7 @@ import java.net.UnknownHostException;
 /**
  * Created by tboss on 2017/10/28.
  */
-@Service
+@Component
 public class ElasticSearchClient{
 
     public TransportClient getClient() {
