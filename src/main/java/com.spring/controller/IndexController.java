@@ -3,7 +3,6 @@ package com.spring.controller;
 import com.spring.elasticSearch.ElasticSearchClient;
 import com.spring.entity.User;
 import com.spring.service.UserService;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,23 @@ public class IndexController {
             logger.error(e.getMessage(), e);
         }
         return list;
+    }
+
+    @RequestMapping("/insertUser")
+    @ResponseBody
+    public Integer insertUser() {
+        Integer num = null;
+        User user = new User();
+        user.setCreateTime(new Date());
+        user.setUserName("admin");
+        user.setPassword("admin");
+        user.setState(1);
+        try {
+            num  = userService.insertUser(user);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return num;
     }
 
     @RequestMapping(value = "/getClient", method = RequestMethod.GET)

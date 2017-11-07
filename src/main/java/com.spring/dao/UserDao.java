@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserDao {
     List<User> getUser();
+    Integer insertUser(User user);
 }

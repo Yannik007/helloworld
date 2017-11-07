@@ -16,6 +16,8 @@ public class User {
     private Date createTime;
     /*更新时间*/
     private  Date updateTime;
+    /*状态*/
+    private Integer state;
 
     public Integer getId() {
         return id;
@@ -55,6 +57,14 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     @Override
