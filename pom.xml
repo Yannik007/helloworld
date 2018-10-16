@@ -11,7 +11,7 @@
     <repository>
       <id>nexus</id>
       <name>nexus</name>
-      <url>http://maven.net.cn/content/groups/public/</url>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -146,6 +146,11 @@
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+      <version>2.0.7.RELEASE</version>
     </dependency>
   </dependencies>
   <build>

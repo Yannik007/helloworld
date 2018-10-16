@@ -11,11 +11,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-    public Integer insertUser(User user) throws Exception {
-        return userDao.insertUser(user);
+    public User insertUser(User user) throws Exception {
+        return userDao.save(user);
     }
 
     public List<User> getUser() throws Exception {
-        return userDao.getUser();
+        return userDao.findAll();
     }
 }

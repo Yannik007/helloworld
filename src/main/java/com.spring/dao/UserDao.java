@@ -1,10 +1,7 @@
 package com.spring.dao;
 
 import com.spring.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface UserDao {
-    List<User> getUser();
-    Integer insertUser(User user);
+public interface UserDao extends JpaRepository<User,Integer> {
 }

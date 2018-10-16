@@ -56,19 +56,19 @@ public class IndexController {
 
     @RequestMapping("/insertUser")
     @ResponseBody
-    public Integer insertUser() {
-        Integer num = null;
+    public User insertUser() {
+        User  result = null;
         User user = new User();
         user.setCreateTime(new Date());
         user.setUserName("admin");
         user.setPassword("admin");
         user.setState(1);
         try {
-            num  = userService.insertUser(user);
+            result= userService.insertUser(user);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return num;
+        return result;
     }
 
     @RequestMapping(value = "/getClient", method = RequestMethod.GET)
