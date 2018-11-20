@@ -4,9 +4,12 @@ import com.spring.entity.User;
 
 import java.util.List;
 
-/*
- *用户接口层 */
+/**
+ *用户接口层
+ */
 public interface UserService {
-    List<User> getUser()throws Exception;
-    User insertUser(User user)throws Exception;
+    List<User> getUser();
+    void insertUser(User user);
+    void deleteUser(Integer id);
+    User getById(Integer id);
 }

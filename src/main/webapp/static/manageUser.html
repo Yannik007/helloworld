@@ -1,0 +1,130 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <script src="../static/js/jqueryUtil.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+    <style type="text/css">
+        <!--
+        .style1 {
+            color: #FFFFFF
+        }
+
+        -->
+    </style>
+</head>
+
+<body topmargin="0" leftmargin="0" bottommargin="0">
+
+
+<form name="form1" method="post">
+    <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" id="userList">
+
+        <tr>
+            <td height="20" bgcolor="#FFCF60">
+                <div align="center" class="style1">用户管理</div>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#666666">
+                <table width="600" border="0" align="center" cellpadding="0" cellspacing="1">
+                    <thead>
+                        <td width="224" height="20" bgcolor="#FFFFFF">
+                            <div align="center">用户昵称</div>
+                        </td>
+                        <td width="93" bgcolor="#FFFFFF">
+                            <div align="center">用户状态</div>
+                        </td>
+                        <td width="79" bgcolor="#FFFFFF">
+                            <div align="center">删除</div>
+                        </td>
+                        <td width="75" bgcolor="#FFFFFF">
+                            <div align="center">查看信息</div>
+                        </td>
+
+                    </thead>
+                    <tbody id="list">
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table width="600" height="25" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+
+            <td align="right">
+                <input type="submit" value="删除选项" class="buttoncss" onclick="user.del()">
+            </td>
+        </tr>
+
+    </table>
+
+</form>
+<script>
+    $(function () {
+        user.init();
+    });
+    var user = {
+        init: function () {
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/index/getUser",
+                data: null,
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    var html="";
+                    if(result.length>0){
+                        for (i = 0; i < result.length;i ++){
+                            var data = result[i];
+                            var state = "冻结";
+                            if(data.state ==1){
+                                state = "未被冻结";
+                            }
+                            html += '<tr> <td height="20" bgcolor="#FFFFFF"> <div align="center">'+data.name+'</div> </td>' +
+                                '<td height="20" bgcolor="#FFFFFF"> <div align="center"> '+state+' </div> </td>'+
+                                '<td height="20" bgcolor="#FFFFFF"> <div align="center"> <input type="checkbox" name="checkbox" value='+data.id+'></div> </td>' +
+                                '<td height="20" bgcolor="#FFFFFF"> <div align="center"><a href="lookUserinfo.html?id='+data.id+'"><img src="images/button_select.png"width="14" height="13" border="0"></a> </div> </td>' +
+                                '</tr>';
+                        }
+                    }
+                    $("#list").html(html);
+
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+        },
+        del: function () {
+            var ids="";
+            $('input[name="checkbox"]:checked').each(function(){
+                ids += $(this).val()+",";
+            });
+            if(ids == null || ids == ""){
+                alert("请选择数据");
+                return;
+            }
+            console.log(ids);
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/index/deleteUser",
+                data: {"ids":ids},
+                dataType: "json",
+                success: function (data) {
+                    alert(data);
+                },
+                error:function (data) {
+                    alert(data.responseText);
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

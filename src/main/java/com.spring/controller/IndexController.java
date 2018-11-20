@@ -41,12 +41,11 @@ public class IndexController {
         return mav;
     }
 
-    @RequestMapping("/getUser")
+    @RequestMapping(value = "/getUser",method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUser() {
         List<User> list = null;
         try {
-
             list = userService.getUser();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -54,21 +53,64 @@ public class IndexController {
         return list;
     }
 
-    @RequestMapping("/insertUser")
+    @RequestMapping(value = "/getUserById",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
-    public User insertUser() {
-        User  result = null;
-        User user = new User();
-        user.setCreateTime(new Date());
-        user.setUserName("admin");
-        user.setPassword("admin");
-        user.setState(1);
+    public User getUser(Integer id) {
+        User user = null;
         try {
-            result= userService.insertUser(user);
+            user = userService.getById(id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return result;
+        return user;
+    }
+
+    @RequestMapping(value = "/insertUser", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
+    @ResponseBody
+    public String insertUser(User user) {
+        if(user.getName() == null || user.getName() == ""){
+            return "用户名不能为空!";
+        }
+        if(user.getTrueName() == null || user.getTrueName() == ""){
+            return "真实姓名不能为空!";
+        }
+        if(user.getCardId() == null || user.getCardId() == ""){
+            return "身份证号码不能为空!";
+        }
+        if(user.getEmail() == null || user.getEmail() == ""){
+            return "电子邮箱不能为空!";
+        }
+        if(user.getTelephone() == null || user.getTelephone() == ""){
+            return "联系电话不能为空!";
+        }
+        if(user.getPwd() == null || user.getPwd() == ""){
+            user.setPwd("123456");
+        }
+        user.setRegTime(new Date());
+        user.setState(1);
+        try {
+            userService.insertUser(user);
+        } catch (Exception e) {
+        }
+        return "添加成功！";
+    }
+
+    @RequestMapping(value = "/deleteUser", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteUser(String ids) {
+        try {
+            if (ids == null || ids == ""){
+                return "参数不能为空！";
+            }
+            String[] id = ids.split(",");
+            for (String myId:id) {
+                Integer userId =Integer.parseInt(myId);
+                userService.deleteUser(userId);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return "删除成功！";
     }
 
     @RequestMapping(value = "/getClient", method = RequestMethod.GET)
